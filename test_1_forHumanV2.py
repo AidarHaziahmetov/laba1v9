@@ -15,61 +15,52 @@ commands_for_y = {
     4: 'Увеличить Y'
 }
 point = [randint(-10, 30),randint(2, 28)]
-print(point)
+print(f'({point[0]},{point[1]})')
 
+user_point = [None,None]
+trys = 0
 
-def guessing(point, count_of_trys=0,user_point=None):
-    
-    count_of_trys += 1
-    if count_of_trys == 9:
-        return 'У тебя кончились попытки'
-    try:
-        if user_point == None:
-            user_point = list(map(int,input(f'Попытка {count_of_trys}: Введите X и Y через пробел: ').split()))
+while trys<8 and user_point != point:
+    trys += 1
+    print(f'\nПопытка №{trys}:')
+    if user_point[0] != point[0]:
 
-        if -10 <=  user_point[0] <= 30 and 2 <= user_point[1] <= 28:
-            if user_point == point:
-                if count_of_trys <= 8:
-                    return f'Ты молодец! Попыток потрачено: {count_of_trys}.'
-                    
-                else:
-                    return f'Ты cправился, но потратил слишкомного попыток: {count_of_trys}.'
-
-            else:
-
-                if user_point[0] - point[0] == 0:
-                    print(commands_for_x[0])
-                elif 3 > user_point[0] - point[0] > 0:
-                    print(commands_for_x[1])
-                elif user_point[0] - point[0] > 0:
-                    print(commands_for_x[2])
-                elif -3 < user_point[0] - point[0] < 0:
-                    print(commands_for_x[3])
-                elif user_point[0] - point[0] < 0:
-                    print(commands_for_x[4])
-
-                if user_point[1] - point[1] == 0:
-                    print(commands_for_y[0])
-                elif 3 > user_point[1] - point[1] > 0:
-                    print(commands_for_y[1])
-                elif user_point[1] - point[1] > 0:
-                    print(commands_for_y[2])
-                elif -3 < user_point[1] - point[1] < 0:
-                    print(commands_for_y[3])
-                elif user_point[1] - point[1] < 0:
-                    print(commands_for_y[4])
-                # return guessing(point, count_of_trys)
+        newx = int(input("\nВведите координату X от -10 до 30: "))
+        if -10 <= newx <= 30:
+            user_point[0] = newx
+            if user_point[0] - point[0] == 0:
+                print('X угадан.')
+            elif 3 > user_point[0] - point[0] > 0:
+                print(commands_for_x[1])
+            elif user_point[0] - point[0] > 0:
+                print(commands_for_x[2])
+            elif -3 < user_point[0] - point[0] < 0:
+                print(commands_for_x[3])
+            elif user_point[0] - point[0] < 0:
+                print(commands_for_x[4])
         else:
-            print('Координаты находятся вне диапазона')
-            return guessing(point, count_of_trys)
-
-    except ValueError:
-        print('Координаты должны быть числами')
-        return  guessing(point, count_of_trys)
-    except TypeError:
-        print('Координаты должны быть числами')
-        return  guessing(point, count_of_trys)
-    except IndexError:
-        print('Вы ввели только одну координату')
-        return guessing(point, count_of_trys)
-print(guessing(point))
+            print('Введенная координата вне диапазона.')
+    else:
+        print('X угадан.\n')
+    if user_point[1] != point[1]:
+        newy = int(input("\nВведите координату Y от 2 до 28: "))
+        if 2 <= newy <= 28:
+            user_point[1] = newy
+            if user_point[1] - point[1] == 0:
+                print('Y угадан.')
+            elif 3 > user_point[1] - point[1] > 0:
+                print(commands_for_y[1])
+            elif user_point[1] - point[1] > 0:
+                print(commands_for_y[2])
+            elif -3 < user_point[1] - point[1] < 0:
+                print(commands_for_y[3])
+            elif user_point[1] - point[1] < 0:
+                print(commands_for_y[4])
+        else:
+            print('Введенная координата вне диапазона.')
+    else:
+        print('Y угадан.\n')
+if user_point == point:
+    print('\nПоздравляю!!! Вы угадали менее чем за 8 попыток.')
+else:
+    print('\nК сожалению, у вас кончились попытки.')
